@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -70,49 +69,76 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/');
-          },
+    return SafeArea(
+      bottom: false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text('Chat Screen'),
         ),
-        title: const Text('Chat Screen'),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          _buildCheckpoints(),
-          LinearProgressIndicator(
-            value: _progressValue,
-            backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildCheckpoints(),
+              LinearProgressIndicator(
+                value: _progressValue,
+                backgroundColor: Colors.grey[200],
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  reverse: true,
+                  itemCount: _messages.length,
+                  itemBuilder: (_, int index) =>
+                      _buildMessage(_messages[index]),
+                ),
+              ),
+              const Divider(height: 1.0),
+              _buildTextComposer(),
+            ],
           ),
-          const SizedBox(height: 16),
-          Flexible(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (_, int index) => _buildMessage(_messages[index]),
-            ),
-          ),
-          const Divider(height: 1.0),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-            ),
-            child: _buildTextComposer(),
-          ),
-        ],
+        ),
       ),
     );
   }
 
+
   Widget _buildMessage(String message) {
-    return ListTile(
-      title: Text(message),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(child: Text('User')),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('User', style: Theme
+                    .of(context)
+                    .textTheme
+                    .subtitle1),
+                Container(
+                  margin: const EdgeInsets.only(top: 5.0),
+                  child: Text(message),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
