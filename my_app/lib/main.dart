@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
+// import 'login.dart';
 import 'chat.dart';
 import 'home.dart';
+import 'google.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
-        '/login': (context) => LoginScreen(),
+        '/login': (context) => LoginScreenGoogle(),
         '/chat': (context) => ChatScreen(),
       },
     );
