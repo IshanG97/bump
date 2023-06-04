@@ -31,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
               controller: _textController,
               onSubmitted: _handleSubmitted,
               decoration:
-              const InputDecoration.collapsed(hintText: 'Send a message'),
+                  const InputDecoration.collapsed(hintText: 'Send a message'),
             ),
           ),
           IconButton(
@@ -111,7 +111,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-
   Widget _buildMessage(String message) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -126,10 +125,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('User', style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1),
+                Text('User', style: Theme.of(context).textTheme.subtitle1),
                 Container(
                   margin: const EdgeInsets.only(top: 5.0),
                   child: Text(message),

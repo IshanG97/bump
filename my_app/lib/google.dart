@@ -21,7 +21,7 @@ class _LoginScreenGoogleState extends State<LoginScreenGoogle> {
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
+        await googleUser.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -30,8 +30,7 @@ class _LoginScreenGoogleState extends State<LoginScreenGoogle> {
     );
 
     // Once signed in, return the UserCredential
-    final userCredential =
-    await _auth.signInWithCredential(credential);
+    final userCredential = await _auth.signInWithCredential(credential);
 
     return userCredential.user;
   }
