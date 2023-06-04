@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/login.dart';
-import 'google.dart';
-import 'home.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'login.dart';
+import 'bump.dart';
 import 'chat.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -20,13 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BUMP',
       theme: ThemeData(
-        brightness: Brightness.dark, // Set the brightness to dark
-        primarySwatch: Colors.red,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/bump',
       routes: {
-        '/': (context) => CustomLayout(
-              child: HomeScreen(),
+        '/bump': (context) => CustomLayout(
+              child: BumpScreen(),
             ),
         '/login': (context) => CustomLayout(
               child: LoginScreen(),
@@ -39,33 +39,83 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CustomLayout extends StatelessWidget {
+class CustomLayout extends StatefulWidget {
   final Widget child;
 
   CustomLayout({required this.child});
 
   @override
+  _CustomLayoutState createState() => _CustomLayoutState();
+}
+
+class _CustomLayoutState extends State<CustomLayout> {
+  int _currentIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      if (_currentIndex == 1) {
+        // Navigate to ChatScreen
+        Navigator.pushNamed(context, '/chat');
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0), // Specify the desired height
-        child: AppBar(
-          centerTitle: true,
-          toolbarHeight: 80.0, // Adjust the height as needed
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Center(
-              child: Image.asset(
-                'assets/icons/bump_logo.png',
-                fit: BoxFit.contain,
-                width: 100,
-                height: 100,
-              ),
-            ),
-          ),
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            Expanded(child: widget.child),
+          ],
         ),
       ),
-      body: child,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          CustomBottomNavigationBarItem(
+            icon: 'assets/icons/navbar_settings.svg',
+          ),
+          CustomBottomNavigationBarItem(
+            icon: 'assets/icons/navbar_chat.svg',
+          ),
+          CustomBottomNavigationBarItem(
+            icon: 'assets/icons/bump_logo.svg',
+          ),
+          CustomBottomNavigationBarItem(
+            icon: 'assets/icons/navbar_location.svg',
+          ),
+          CustomBottomNavigationBarItem(
+            icon: 'assets/icons/navbar_add.svg',
+          ),
+        ],
+      ),
     );
   }
+}
+
+class CustomBottomNavigationBarItem extends BottomNavigationBarItem {
+  CustomBottomNavigationBarItem({required String icon})
+      : super(
+          icon: Container(
+            width: double.infinity,
+            child: InkWell(
+              onTap: () {},
+              child: SvgPicture.asset(
+                icon,
+                width: 36,
+                height: 36,
+              ),
+            ),
+            alignment: Alignment.center,
+          ),
+          label: '',
+        );
 }
