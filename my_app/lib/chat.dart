@@ -72,15 +72,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return SafeArea(
       bottom: false,
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: const Text('Chat Screen'),
-        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
