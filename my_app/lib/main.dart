@@ -1,216 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'login.dart';
 import 'bump.dart';
 import 'chat.dart';
 import 'settings.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'location.dart';
+import 'add.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (_) => NavigationProvider(),
-      child: MyApp(),
+      child: MaterialApp(
+        title: 'BUMP',
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/login',
+        routes: {
+          '/login': (context) => LoginScreen(),
+        },
+        home: Scaffold(
+          body: Consumer<NavigationProvider>(
+            builder: (context, provider, _) {
+              switch (provider.currentIndex) {
+                case 0:
+                  return SettingsScreen();
+                case 1:
+                  return ChatScreen();
+                case 2:
+                  return BumpScreen();
+                case 3:
+                  return LocationScreen();
+                case 4:
+                  return AddScreen();
+                default:
+                  return ChatScreen();
+              }
+            },
+          ),
+          bottomNavigationBar: CustomBottomNavigationBar(),
+        ),
+      ),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BUMP',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
+    return Consumer<NavigationProvider>(
+      builder: (context, provider, _) => BottomNavigationBar(
+        currentIndex: provider.currentIndex,
+        onTap: (index) {
+          provider.updateCurrentIndex(index);
+        },
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          _buildNavigationBarItem(
+            'assets/icons/navbar_settings.svg',
+            provider.currentIndex == 0,
+            () => Navigator.pushReplacementNamed(context, '/settings'),
+          ),
+          _buildNavigationBarItem(
+            'assets/icons/navbar_chat.svg',
+            provider.currentIndex == 1,
+            () => Navigator.pushReplacementNamed(context, '/chat'),
+          ),
+          _buildNavigationBarItem(
+            'assets/icons/bump_logo.svg',
+            provider.currentIndex == 2,
+            () => Navigator.pushReplacementNamed(context, '/bump'),
+          ),
+          _buildNavigationBarItem(
+            'assets/icons/navbar_location.svg',
+            provider.currentIndex == 3,
+            () => Navigator.pushReplacementNamed(context, '/location'),
+          ),
+          _buildNavigationBarItem(
+            'assets/icons/navbar_add.svg',
+            provider.currentIndex == 4,
+            () => Navigator.pushReplacementNamed(context, '/add'),
+          ),
+        ],
       ),
-      initialRoute: '/chat',
-      onGenerateRoute: (settings) {
-        return PageRouteBuilder(
-          settings: settings,
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return FadeTransition(
-              opacity: animation,
-              child: _buildScreen(settings.name!),
-            );
-          },
-        );
-      },
-      routes: {
-        '/bump': (context) => CustomLayout(child: BumpScreen()),
-        '/login': (context) => CustomLayout(child: LoginScreen()),
-        '/chat': (context) => CustomLayout(child: ChatScreen()),
-        '/settings': (context) => CustomLayout(child: SettingsScreen()),
-      },
     );
   }
 
-  Widget _buildScreen(String routeName) {
-    switch (routeName) {
-      case '/bump':
-        return CustomLayout(child: BumpScreen());
-      case '/login':
-        return CustomLayout(child: LoginScreen());
-      case '/chat':
-        return CustomLayout(child: ChatScreen());
-      case '/settings':
-        return CustomLayout(child: SettingsScreen());
-      default:
-        return Container();
-    }
-  }
-}
-
-class CustomLayout extends StatelessWidget {
-  final Widget child;
-
-  CustomLayout({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          // Add your app bar here if needed
-          // ...
-          ),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            Expanded(child: child),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigation(),
-    );
-  }
-}
-
-class BottomNavigation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<NavigationProvider>(context);
-    return BottomNavigationBar(
-      currentIndex: provider.currentIndex,
-      onTap: (index) {
-        provider.updateCurrentIndex(index);
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, '/settings');
-            break;
-          case 2:
-            Navigator.pushNamed(context, '/bump');
-            break;
-          default:
-            break;
-        }
-      },
-      elevation: 0,
-      type: BottomNavigationBarType.fixed,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      items: [
-        BottomNavigationBarItem(
-          icon: CustomBottomNavigationBarItem(
-            iconPath: 'assets/icons/navbar_settings.svg',
-            isSelected: provider.currentIndex == 0,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: CustomBottomNavigationBarItem(
-            iconPath: 'assets/icons/navbar_chat.svg',
-            isSelected: provider.currentIndex == 1,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: CustomBottomNavigationBarItem(
-            iconPath: 'assets/icons/bump_logo.svg',
-            isSelected: provider.currentIndex == 2,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: CustomBottomNavigationBarItem(
-            iconPath: 'assets/icons/navbar_location.svg',
-            isSelected: provider.currentIndex == 3,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: CustomBottomNavigationBarItem(
-            iconPath: 'assets/icons/navbar_add.svg',
-            isSelected: provider.currentIndex == 4,
-          ),
-          label: '',
-        ),
-      ],
-    );
-  }
-}
-
-class CustomBottomNavigationBarItem extends StatefulWidget {
-  final String iconPath;
-  final bool isSelected;
-
-  const CustomBottomNavigationBarItem({
-    required this.iconPath,
-    this.isSelected = false,
-  });
-
-  @override
-  _CustomBottomNavigationBarItemState createState() =>
-      _CustomBottomNavigationBarItemState();
-}
-
-class _CustomBottomNavigationBarItemState
-    extends State<CustomBottomNavigationBarItem> {
-  bool _isTapped = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTapDown: (_) {
-          setState(() {
-            _isTapped = true;
-          });
-        },
-        onTapUp: (_) {
-          setState(() {
-            _isTapped = false;
-          });
-          if (widget.iconPath == 'assets/icons/navbar_chat.svg') {
-            Navigator.pushNamed(context, '/chat');
-          }
-        },
-        onTapCancel: () {
-          setState(() {
-            _isTapped = false;
-          });
-        },
+  BottomNavigationBarItem _buildNavigationBarItem(
+      String iconPath, bool isSelected, VoidCallback onTap) {
+    return BottomNavigationBarItem(
+      icon: GestureDetector(
+        onTap: onTap,
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.transparent,
           ),
           child: SvgPicture.asset(
-            widget.iconPath,
+            iconPath,
             width: 36,
             height: 36,
-            color: widget.isSelected || _isTapped ? Colors.blue : null,
+            color: isSelected ? Colors.blue : null,
           ),
           alignment: Alignment.center,
         ),
       ),
+      label: '',
     );
   }
 }
