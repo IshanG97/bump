@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,6 +12,29 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String _errorText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _signInSilently();
+  }
+
+  Future<void> _signInSilently() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      final GoogleSignInAccount? googleUser =
+          await googleSignIn.signInSilently();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      // Use the googleAuth.idToken and googleAuth.accessToken to authenticate with your backend server
+
+      // Navigate to the next screen or perform any other actions
+    } catch (error) {
+      print('Google Sign-In Error: $error');
+    }
+  }
 
   Future<void> _login() async {
     try {
@@ -30,10 +54,29 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to the home screen
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
-      // Handle login errors
       setState(() {
         _errorText = 'Login failed. Please check your credentials.';
       });
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId:
+          '842751620236-g7lris546cuofu9tlafmijsc4j2494uu.apps.googleusercontent.com',
+    );
+
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      // Use the googleAuth.idToken and googleAuth.accessToken to authenticate with your backend server
+
+      // Navigate to the next screen or perform any other actions
+      Navigator.pushReplacementNamed(context, '/');
+    } catch (error) {
+      print('Google Sign-In Error: $error');
     }
   }
 
@@ -81,6 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     color: Colors.red,
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: _signInWithGoogle,
+                  child: Text('Sign in with Google'),
                 ),
               ],
             ),

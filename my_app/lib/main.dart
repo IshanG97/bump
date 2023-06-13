@@ -26,10 +26,17 @@ void main() async {
         routes: {
           '/login': (context) => LoginScreen(),
         },
+
+        // initialRoute: '/google_signin',
+        // routes: {
+        //   '/google_signin': (context) => GoogleSignInScreen(),
+        // },
+
         home: Scaffold(
           body: Consumer<NavigationProvider>(
             builder: (context, provider, _) {
-              switch (provider.currentIndex) {
+              // switch (provider.currentIndex) {
+              switch (2) {
                 case 0:
                   return SettingsScreen();
                 case 1:
@@ -61,7 +68,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap: (index) {
           provider.updateCurrentIndex(index);
         },
-        elevation: 0,
+        elevation: 1,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
