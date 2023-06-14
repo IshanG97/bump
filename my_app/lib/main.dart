@@ -9,13 +9,19 @@ import 'settings.dart';
 import 'location.dart';
 import 'add.dart';
 import 'firebase_options.dart';
+import 'user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => NavigationProvider(),
+    MultiProvider(
+      // Use MultiProvider to provide more than one provider
+      providers: [
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(
+            create: (_) => UserProvider()), // Add UserProvider
+      ],
       child: MaterialApp(
         title: 'BUMP',
         theme: ThemeData(
@@ -25,18 +31,14 @@ void main() async {
         initialRoute: '/login',
         routes: {
           '/login': (context) => LoginScreen(),
+          '/chat': (context) => ChatScreen(),
+          '/location': (context) => LocationScreen(),
         },
-
-        // initialRoute: '/google_signin',
-        // routes: {
-        //   '/google_signin': (context) => GoogleSignInScreen(),
-        // },
-
         home: Scaffold(
           body: Consumer<NavigationProvider>(
             builder: (context, provider, _) {
-              // switch (provider.currentIndex) {
-              switch (2) {
+              switch (provider.currentIndex) {
+                //switch (2) {
                 case 0:
                   return SettingsScreen();
                 case 1:

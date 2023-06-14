@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _signInSilently();
   }
 
+  //look at cookies for googlesignin - 90s, 1 whole day, etc
   Future<void> _signInSilently() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -31,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Use the googleAuth.idToken and googleAuth.accessToken to authenticate with your backend server
 
       // Navigate to the next screen or perform any other actions
+      Navigator.pushReplacementNamed(context, '/');
     } catch (error) {
       print('Google Sign-In Error: $error');
     }
@@ -49,10 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       // Handle successful login
-      // TODO: Add your logic here
-
-      // Navigate to the home screen
-      Navigator.pushReplacementNamed(context, '/');
+      _handleLoginSuccess(userCredential.user);
     } catch (e) {
       setState(() {
         _errorText = 'Login failed. Please check your credentials.';
@@ -71,12 +72,38 @@ class _LoginScreenState extends State<LoginScreen> {
       final GoogleSignInAuthentication googleAuth =
           await googleUser!.authentication;
 
-      // Use the googleAuth.idToken and googleAuth.accessToken to authenticate with your backend server
+      // Create a new credential
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-      // Navigate to the next screen or perform any other actions
-      Navigator.pushReplacementNamed(context, '/');
+      // Sign in to Firebase with the Google [UserCredential]
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      // Handle successful login
+      _handleLoginSuccess(userCredential.user);
     } catch (error) {
       print('Google Sign-In Error: $error');
+    }
+  }
+
+  void _handleLoginSuccess(User? user) {
+    if (user != null) {
+      // Print the user details
+      print('Sign-In Successful');
+      print('User Name: ${user.displayName}');
+      print('User Email: ${user.email}');
+      print('User ID: ${user.uid}');
+
+      // Update the user information in UserProvider
+      final UserProvider userProvider =
+          Provider.of<UserProvider>(context, listen: false);
+      userProvider.updateUser(user);
+
+      // Navigate to the home screen
+      Navigator.pushReplacementNamed(context, '/');
     }
   }
 
@@ -87,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(48.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -98,14 +125,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 32),
                 TextField(
                   controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: 'Username',
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 24),
                 TextField(
                   controller: _passwordController,
                   decoration: InputDecoration(
@@ -113,22 +140,54 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   obscureText: true,
                 ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  child: Text('Login'),
-                  onPressed: _login,
-                ),
-                SizedBox(height: 16),
-                Text(
-                  _errorText,
-                  style: TextStyle(
-                    color: Colors.red,
+                SizedBox(height: 48),
+                SizedBox(
+                  width: 200,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black12,
+                    ),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: _signInWithGoogle,
-                  child: Text('Sign in with Google'),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: 200,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: _signInWithGoogle,
+                    style: ElevatedButton.styleFrom(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Sign in with ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                            width: 8), // Add spacing between the image and text
+                        ImageIcon(
+                          AssetImage(
+                              'assets/icons/google_logo_small.png'), // Replace with your image path
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                SizedBox(height: 16),
               ],
             ),
           ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'user_provider.dart'; // Import the UserProvider class
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -8,42 +10,61 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Consumer<UserProvider>(
+              builder: (context, userProvider, _) {
+                final user = userProvider.user;
+                if (user != null) {
+                  return Column(
+                    children: [
+                      Text(
+                        'User Name: ${user.displayName}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'User Email: ${user.email}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 16),
+                    ],
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the Chat Screen
-                Navigator.pushNamed(context, '/chat');
+                Navigator.pushReplacementNamed(context, '/chat');
               },
               style: ElevatedButton.styleFrom(
-                primary:
-                    Colors.black, // Set the button background color to black
-                minimumSize:
-                    Size(200, 60), // Set the minimum size of the button
+                primary: Colors.black,
+                minimumSize: Size(200, 60),
               ),
               child: Text(
                 'Chat',
                 style: TextStyle(
-                  fontSize: 18, // Increase the font size of the button text
-                  color: Colors.white, // Set the button text color to white
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
               ),
             ),
-            SizedBox(height: 16), // Add a SizedBox for vertical spacing
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the Login Screen
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
-                primary:
-                    Colors.black, // Set the button background color to black
-                minimumSize:
-                    Size(200, 60), // Set the minimum size of the button
+                primary: Colors.black,
+                minimumSize: Size(200, 60),
               ),
               child: Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: 18, // Increase the font size of the button text
-                  color: Colors.white, // Set the button text color to white
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
               ),
             ),
