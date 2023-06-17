@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'login.dart';
-import 'bump.dart';
-import 'chat.dart';
-import 'settings.dart';
-import 'location.dart';
-import 'add.dart';
+import 'screens/login.dart';
+import 'screens/bump.dart';
+import 'screens/chat.dart';
+import 'screens/settings.dart';
+import 'screens/location.dart';
+import 'screens/add.dart';
 import 'firebase_options.dart';
-import 'user_provider.dart';
+import 'providers/user_provider.dart';
+import 'package:my_app/screens/chat_multi.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
