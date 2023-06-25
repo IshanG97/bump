@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'screens/login.dart';
 import 'screens/bump.dart';
 import 'screens/chat.dart';
@@ -11,10 +14,14 @@ import 'screens/add.dart';
 import 'firebase_options.dart';
 import 'providers/user_provider.dart';
 import 'package:my_app/screens/chat_multi.dart';
+import 'providers/chat_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   runApp(
     MultiProvider(
       // Use MultiProvider to provide more than one provider
@@ -22,6 +29,11 @@ void main() async {
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(
             create: (_) => UserProvider()), // Add UserProvider
+        Provider<ChatProvider>(
+            create: (_) => ChatProvider(
+                prefs: prefs,
+                firebaseStorage: firebaseStorage,
+                firebaseFirestore: firebaseFirestore))
       ],
       child: MaterialApp(
         title: 'BUMP',
