@@ -9,12 +9,13 @@ import 'screens/login.dart';
 import 'screens/bump.dart';
 import 'screens/chat.dart';
 import 'screens/settings.dart';
-import 'screens/location.dart';
+// import 'screens/location.dart';
 import 'screens/add.dart';
 import 'firebase_options.dart';
 import 'providers/user_provider.dart';
 import 'package:my_app/screens/chat_multi.dart';
 import 'providers/chat_provider.dart';
+import 'screens/mapScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
