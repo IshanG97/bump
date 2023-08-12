@@ -5,17 +5,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'screens/login.dart';
 import 'screens/bump.dart';
 import 'screens/chat.dart';
 import 'screens/settings.dart';
-// import 'screens/location.dart';
 import 'screens/add.dart';
-import 'firebase_options.dart';
+import 'screens/map.dart';
+
+import 'resources/firebase_options.dart';
 import 'providers/user_provider.dart';
-import 'package:my_app/screens/chat_multi.dart';
 import 'providers/chat_provider.dart';
-import 'screens/mapScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

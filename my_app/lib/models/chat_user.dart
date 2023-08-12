@@ -5,6 +5,7 @@ class ChatUser extends Equatable {
   final String phoneNumber;
   final String displayName;
   final String bio;
+  //Ishan
 
   ChatUser({
     required this.photoUrl,
