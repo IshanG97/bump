@@ -85,7 +85,7 @@ class _ChatPageState extends State<ChatPage> {
 
   void readLocal() {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
         (Route<dynamic> route) => false);
 
     if (currentUserId.compareTo(widget.peerId) > 0) {

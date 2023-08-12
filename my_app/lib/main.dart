@@ -44,9 +44,9 @@ void main() async {
         ),
         initialRoute: '/login',
         routes: {
-          '/login': (context) => LoginScreen(),
-          '/chat': (context) => ChatScreen(),
-          '/location': (context) => LocationScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/chat': (context) => const ChatScreen(),
+          '/location': (context) => const LocationScreen(),
         },
         home: Scaffold(
           body: Consumer<NavigationProvider>(
@@ -54,21 +54,21 @@ void main() async {
               switch (provider.currentIndex) {
                 //switch (2) {
                 case 0:
-                  return SettingsScreen();
+                  return const SettingsScreen();
                 case 1:
-                  return ChatScreen();
+                  return const ChatScreen();
                 case 2:
-                  return BumpScreen();
+                  return const BumpScreen();
                 case 3:
-                  return LocationScreen();
+                  return const LocationScreen();
                 case 4:
-                  return AddScreen();
+                  return const AddScreen();
                 default:
-                  return ChatScreen();
+                  return const ChatScreen();
               }
             },
           ),
-          bottomNavigationBar: CustomBottomNavigationBar(),
+          bottomNavigationBar: const CustomBottomNavigationBar(),
         ),
       ),
     ),
@@ -76,6 +76,8 @@ void main() async {
 }
 
 class CustomBottomNavigationBar extends StatelessWidget {
+  const CustomBottomNavigationBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<NavigationProvider>(
@@ -126,16 +128,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap: onTap,
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.transparent,
           ),
+          alignment: Alignment.center,
           child: SvgPicture.asset(
             iconPath,
             width: 36,
             height: 36,
             color: isSelected ? Colors.blue : null,
           ),
-          alignment: Alignment.center,
         ),
       ),
       label: '',

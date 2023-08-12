@@ -11,7 +11,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<String> _messages = <String>[];
   double _progressValue = 0.0;
-  List<double> _checkpoints = [0.2, 0.5, 0.8];
+  final List<double> _checkpoints = [0.2, 0.5, 0.8];
 
   void _handleSubmitted(String text) {
     _textController.clear();
@@ -81,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
               LinearProgressIndicator(
                 value: _progressValue,
                 backgroundColor: Colors.grey[200],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
               ),
               const SizedBox(height: 16),
               Expanded(
@@ -110,13 +110,13 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Container(
             margin: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(child: Text('User')),
+            child: const CircleAvatar(child: Text('User')),
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('User', style: Theme.of(context).textTheme.subtitle1),
+                Text('User', style: Theme.of(context).textTheme.titleMedium),
                 Container(
                   margin: const EdgeInsets.only(top: 5.0),
                   child: Text(message),

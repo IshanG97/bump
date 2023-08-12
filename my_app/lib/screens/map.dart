@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
@@ -14,7 +16,7 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Location Screen'),
+        title: const Text('Location Screen'),
       ),
       body: GoogleMap(
         onMapCreated: (controller) {
@@ -22,7 +24,7 @@ class _LocationScreenState extends State<LocationScreen> {
             _mapController = controller;
           });
         },
-        initialCameraPosition: CameraPosition(
+        initialCameraPosition: const CameraPosition(
           target: _initialPosition,
           zoom: 15,
         ),
@@ -31,14 +33,14 @@ class _LocationScreenState extends State<LocationScreen> {
         onPressed: () {
           _mapController?.animateCamera(
             CameraUpdate.newCameraPosition(
-              CameraPosition(
+              const CameraPosition(
                 target: _initialPosition,
                 zoom: 15,
               ),
             ),
           );
         },
-        child: Icon(Icons.my_location),
+        child: const Icon(Icons.my_location),
       ),
     );
   }

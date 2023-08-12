@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'resources/firebase_options.dart';
 
 void main() async {
@@ -9,35 +9,36 @@ void main() async {
 
   runApp(
     const MaterialApp(
-      home: FirestoreConnectionTest(),
+      home: RealtimeDatabaseConnectionTest(),
     ),
   );
 }
 
-class FirestoreConnectionTest extends StatefulWidget {
-  const FirestoreConnectionTest({super.key});
+class RealtimeDatabaseConnectionTest extends StatefulWidget {
+  const RealtimeDatabaseConnectionTest({Key? key}) : super(key: key);
 
   @override
-  _FirestoreConnectionTestState createState() =>
-      _FirestoreConnectionTestState();
+  _RealtimeDatabaseConnectionTestState createState() =>
+      _RealtimeDatabaseConnectionTestState();
 }
 
-class _FirestoreConnectionTestState extends State<FirestoreConnectionTest> {
+class _RealtimeDatabaseConnectionTestState
+    extends State<RealtimeDatabaseConnectionTest> {
   bool isConnected = false;
 
-  void testFirestoreConnection() async {
+  void testRealtimeDatabaseConnection() async {
     try {
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-      QuerySnapshot snapshot =
-          await firestore.collection("users").limit(1).get();
+      DatabaseReference reference = FirebaseDatabase.instance.ref();
 
-      if (snapshot.docs.isNotEmpty) {
+      DatabaseEvent snapshot = await reference.child("test").once();
+
+      if (snapshot.snapshot.value != null) {
         setState(() {
           isConnected = true;
         });
       }
     } catch (e) {
-      print("Error connecting to Firestore: $e");
+      print("Error connecting to Realtime Database: $e");
     }
   }
 
@@ -45,7 +46,7 @@ class _FirestoreConnectionTestState extends State<FirestoreConnectionTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Firestore Connection Test'),
+        title: const Text('Realtime Database Connection Test'),
       ),
       body: Center(
         child: Column(
@@ -53,12 +54,12 @@ class _FirestoreConnectionTestState extends State<FirestoreConnectionTest> {
           children: <Widget>[
             if (isConnected)
               const Text(
-                'Connected to Firestore!',
+                'Connected to Realtime Database!',
                 style: TextStyle(fontSize: 20),
               )
             else
               ElevatedButton(
-                onPressed: testFirestoreConnection,
+                onPressed: testRealtimeDatabaseConnection,
                 child: const Text('Test Connection'),
               ),
           ],

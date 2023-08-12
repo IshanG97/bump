@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BumpScreen extends StatelessWidget {
+  const BumpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +13,7 @@ class BumpScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: GestureDetector(
                   onTap: () {
                     // Handle button tap
@@ -24,7 +26,7 @@ class BumpScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 32),
                 child: Text(
                   'Tap "BUMP" to start matchmaking',
@@ -32,7 +34,7 @@ class BumpScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 32),
                 child: Text(
                   'Matchmaking preference',

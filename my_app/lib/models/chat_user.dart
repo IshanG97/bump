@@ -7,7 +7,7 @@ class ChatUser extends Equatable {
   final String bio;
   //Ishan
 
-  ChatUser({
+  const ChatUser({
     required this.photoUrl,
     required this.phoneNumber,
     required this.displayName,

@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart'; // Import the UserProvider class
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,18 +20,18 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'User Name: ${user.displayName}',
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         'User Email: ${user.email}',
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                     ],
                   );
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               },
             ),
@@ -39,10 +41,10 @@ class SettingsScreen extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/chat');
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                minimumSize: Size(200, 60),
+                backgroundColor: Colors.black,
+                minimumSize: const Size(200, 60),
               ),
-              child: Text(
+              child: const Text(
                 'Chat',
                 style: TextStyle(
                   fontSize: 18,
@@ -50,17 +52,17 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the Login Screen
                 Navigator.pushReplacementNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                minimumSize: Size(200, 60),
+                backgroundColor: Colors.black,
+                minimumSize: const Size(200, 60),
               ),
-              child: Text(
+              child: const Text(
                 'Login',
                 style: TextStyle(
                   fontSize: 18,
