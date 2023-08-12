@@ -44,21 +44,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-      apiKey: "AIzaSyDYydA4soomalePat9Txs6XNeAPtoVrlJg",
-      authDomain: "bump-82d8f.firebaseapp.com",
-      databaseURL:
-          "https://bump-82d8f-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "bump-82d8f",
-      storageBucket: "bump-82d8f.appspot.com",
-      messagingSenderId: "842751620236",
-      appId: "1:842751620236:web:7766fd8ec2248b4c5337a9",
-      measurementId: "G-G65N4JN685");
+    apiKey: 'AIzaSyDYydA4soomalePat9Txs6XNeAPtoVrlJg',
+    appId: '1:842751620236:web:7766fd8ec2248b4c5337a9',
+    messagingSenderId: '842751620236',
+    projectId: 'bump-82d8f',
+    authDomain: 'bump-82d8f.firebaseapp.com',
+    databaseURL: 'https://bump-82d8f-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'bump-82d8f.appspot.com',
+    measurementId: 'G-G65N4JN685',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBq41gsdpbE2U7Wtaw_TCmOoIoWsSGmZSM',
     appId: '1:842751620236:android:a498e11e2d4da5465337a9',
     messagingSenderId: '842751620236',
     projectId: 'bump-82d8f',
+    databaseURL: 'https://bump-82d8f-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'bump-82d8f.appspot.com',
   );
 
@@ -67,9 +68,9 @@ class DefaultFirebaseOptions {
     appId: '1:842751620236:ios:9fcb6e9fd83166105337a9',
     messagingSenderId: '842751620236',
     projectId: 'bump-82d8f',
+    databaseURL: 'https://bump-82d8f-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'bump-82d8f.appspot.com',
-    iosClientId:
-        '842751620236-sqc5p80805tk59klteu7v9pt3uc7dsfc.apps.googleusercontent.com',
+    iosClientId: '842751620236-sqc5p80805tk59klteu7v9pt3uc7dsfc.apps.googleusercontent.com',
     iosBundleId: 'com.example.myApp',
   );
 
@@ -78,9 +79,9 @@ class DefaultFirebaseOptions {
     appId: '1:842751620236:ios:9fcb6e9fd83166105337a9',
     messagingSenderId: '842751620236',
     projectId: 'bump-82d8f',
+    databaseURL: 'https://bump-82d8f-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'bump-82d8f.appspot.com',
-    iosClientId:
-        '842751620236-sqc5p80805tk59klteu7v9pt3uc7dsfc.apps.googleusercontent.com',
+    iosClientId: '842751620236-sqc5p80805tk59klteu7v9pt3uc7dsfc.apps.googleusercontent.com',
     iosBundleId: 'com.example.myApp',
   );
 }

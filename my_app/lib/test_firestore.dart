@@ -25,17 +25,21 @@ class FirestoreConnectionTest extends StatefulWidget {
 class _FirestoreConnectionTestState extends State<FirestoreConnectionTest> {
   bool isConnected = false;
 
-  void testFirestoreConnection() async {
+  void addUserToFirestore() async {
     try {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
-      QuerySnapshot snapshot =
-          await firestore.collection("users").limit(1).get();
+      // Create a reference to the "users" collection
+      CollectionReference usersCollection = firestore.collection('users');
 
-      if (snapshot.docs.isNotEmpty) {
-        setState(() {
-          isConnected = true;
-        });
-      }
+      // Data to be added to the document
+      Map<String, dynamic> userData = {
+        'name': 'John Doe',
+        'email': 'johndoe@example.com',
+      };
+
+      // Add the new document to the "users" collection
+      DocumentReference newDocument = await usersCollection.add(userData);
+      print('Document added with ID: ${newDocument.id}');
     } catch (e) {
       print("Error connecting to Firestore: $e");
     }
@@ -58,7 +62,7 @@ class _FirestoreConnectionTestState extends State<FirestoreConnectionTest> {
               )
             else
               ElevatedButton(
-                onPressed: testFirestoreConnection,
+                onPressed: addUserToFirestore,
                 child: const Text('Test Connection'),
               ),
           ],
