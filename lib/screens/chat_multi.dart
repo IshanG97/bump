@@ -6,15 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/allConstants/all_constants.dart';
-import 'package:my_app/allWidgets/common_widgets.dart';
-import 'package:my_app/models/chat_messages.dart';
+import 'package:bump/allConstants/all_constants.dart';
+import 'package:bump/allWidgets/common_widgets.dart';
+import 'package:bump/models/chat_messages.dart';
 // import 'package:smart_talk/providers/auth_provider.dart';
-import 'package:my_app/providers/chat_provider.dart';
-import 'package:my_app/providers/profile_provider.dart';
+import 'package:bump/providers/chat_provider.dart';
+import 'package:bump/providers/profile_provider.dart';
 // import 'package:smart_talk/screens/login_page.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:my_app/screens/login.dart';
+import 'package:bump/screens/login.dart';
 
 class ChatPage extends StatefulWidget {
   final String peerId;

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_app/allConstants/all_constants.dart';
+import 'package:bump/allConstants/all_constants.dart';
 
 class HomeProvider {
   final FirebaseFirestore firebaseFirestore;

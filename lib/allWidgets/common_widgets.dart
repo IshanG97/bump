@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/allConstants/all_constants.dart';
+import 'package:bump/allConstants/all_constants.dart';
 
 Widget errorContainer() {
   return Container(

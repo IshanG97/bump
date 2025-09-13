@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:my_app/allConstants/all_constants.dart';
-import 'package:my_app/models/chat_messages.dart';
+import 'package:bump/allConstants/all_constants.dart';
+import 'package:bump/models/chat_messages.dart';
 
 class ChatProvider {
   final SharedPreferences prefs;
