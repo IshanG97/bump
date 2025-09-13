@@ -1,10 +1,25 @@
-# my_app
+# Bump
 
-A new Flutter project.
+Flutter app for social matching and connections.
+
+## Setup
+
+### API Keys Configuration
+
+1. **Generate Google Maps API keys** for iOS and Web platforms in [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+
+2. **Configure API keys**:
+   - **iOS**: Update `ios/Runner/Config.plist` with your iOS API key
+   - **Web**: Set `GOOGLE_MAPS_API_KEY` environment variable when building
+
+### Development
+
+```bash
+flutter pub get
+flutter run
+```
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 

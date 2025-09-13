@@ -28,7 +28,15 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!--  Google Maps API key here -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwhUIjrP55pk1wiVXzs7s7r4M_VkQmL2M"></script>
+  <script>
+    // Load Google Maps API key from environment variable
+    const googleMapsApiKey = window.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '';
+    if (!googleMapsApiKey) {
+      console.error('Google Maps API key not found. Please set GOOGLE_MAPS_API_KEY environment variable.');
+    } else {
+      document.write('<script src="https://maps.googleapis.com/maps/api/js?key=' + googleMapsApiKey + '"><\/script>');
+    }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
