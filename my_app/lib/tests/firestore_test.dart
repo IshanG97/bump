@@ -25,6 +25,8 @@ class _FirestoreTestState extends State<FirestoreTest> {
   bool isConnected = false;
   String connectionStatus = 'Waiting to connect...';
 
+  List<String> users = [];
+
   Future<void> addUserToFirestore() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     // Create a new user with a first and last name
@@ -40,6 +42,18 @@ class _FirestoreTestState extends State<FirestoreTest> {
     setState(() {
       isConnected = true;
       connectionStatus = 'Connected to Firestore!';
+    });
+  }
+
+  Future<void> readUsersFromFirestore() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    // Create a new user with a first and last name
+    await db.collection("users").get().then((event) {
+      users.clear();
+      for (var doc in event.docs) {
+        users.add("${doc.id} => ${doc.data()}");
+      }
+      setState(() {});
     });
   }
 
@@ -64,6 +78,20 @@ class _FirestoreTestState extends State<FirestoreTest> {
                 );
               },
               child: const Text('Add User'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                readUsersFromFirestore();
+              },
+              child: const Text('List Users'),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return Text(users[index]);
+                },
+              ),
             ),
           ],
         ),

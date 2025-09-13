@@ -33,8 +33,8 @@ class _RealTimeDatabaseTestState extends State<RealTimeDatabaseTest> {
     // Create a new user with a first and last name
     final user = {"first": "Ada", "last": "Lovelace", "born": 1815};
 
-    // Add the new user to the database
-    await dbRef.child(user['first'] + user['last']).set(user);
+    // Add the new user to the database - NOTE: INCOMPLETE
+    //await dbRef.child(user['first'].concat(user['last'])).set(user);
 
     setState(() {
       isConnected = true;

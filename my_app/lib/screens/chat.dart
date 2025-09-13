@@ -31,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
               controller: _textController,
               onSubmitted: _handleSubmitted,
               decoration:
-                  const InputDecoration.collapsed(hintText: 'Send a message'),
+              const InputDecoration.collapsed(hintText: 'Send a message'),
             ),
           ),
           IconButton(
@@ -52,15 +52,24 @@ class _ChatScreenState extends State<ChatScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        for (double checkpoint in _checkpoints)
+        for (int i = 0; i < _checkpoints.length; i++)
           Container(
             width: 20,
             height: 20,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: _progressValue >= checkpoint
+              color: _progressValue >= _checkpoints[i]
                   ? Colors.blue
                   : Colors.grey.withOpacity(0.5),
+            ),
+            child: Center(
+              child: Text(
+                (i + 1).toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
       ],
@@ -103,28 +112,39 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildMessage(String message) {
-    return Container(
+    return Card( // Wrap the message in a Card widget
+      elevation: 2.0,
       margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(right: 16.0),
-            child: const CircleAvatar(child: Text('User')),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('User', style: Theme.of(context).textTheme.titleMedium),
-                Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  child: Text(message),
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.grey,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(right: 8.0),
+                child: const CircleAvatar(child: Text('User')),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 5.0),
+                      child: Text(message),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
